@@ -1,0 +1,27 @@
+import apache_beam as beam
+
+
+with beam.Pipeline() as P:
+    r=(
+        P
+        | 'reading the parquet file data' >> beam.io.ReadFromParquet('gs://0305_01/userdata2.parquet')      >>>>>>>> "The following code will print the data in parquet format"
+        | 'prinitng the output' >> beam.Map(print)
+    )
+
+
+with beam.Pipeline() as P:
+    r=(
+        P
+        | 'reading the parquet file data' >> beam.io.ReadFromParquet('gs://0305_01/userdata2.parquet')     >>>>>>> "The following code will count the output from the above pcollection"
+        | 'limit' >> beam.transforms.combiners.Count.Globally()
+        | 'printing the output' >> beam.Map(print)
+    )
+
+
+with beam.Pipeline() as P:
+    r=(
+        P
+        | 'reading the parquet file data' >> beam.io.ReadFromParquet('gs://0305_01/userdata2.parquet')     >>>>>>> "The following code will limit the output from the above pcollection"
+        | 'limit' >> beam.transforms.combiners.Sample.FixedSizeGlobally(1)
+        | 'limiting the output' >> beam.Map(print)
+    )
